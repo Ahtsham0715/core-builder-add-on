@@ -54,22 +54,28 @@ if not os.path.exists('datafile.txt'):
         pass
 
 def isdataavailable():
+    print('in data available function... ')
     with open('datafile.txt', 'r+') as f:
     # print(f.read())
         data = f.read()
         print(f.read())
         if data != '':
-            server = smtplib.SMTP(host="smtp.gmail.com", port=587)
-            # # connect to the SMTP server as TLS mode ( for security )
-            server.starttls()
-            # login to the email account
-            server.login('007711meenakshi@gmail.com', 'tqbnkgbxprgppuim')
-            # send the actual message
-            server.sendmail('007711meenakshi@gmail.com', '999ajaymathur@gmail.com', data)
-            print('email sent successfully')
-            # terminates the session
-            server.quit()
-            f.truncate()
+            try:
+                server = smtplib.SMTP(host="smtp.gmail.com", port=587)
+                # # connect to the SMTP server as TLS mode ( for security )
+                server.starttls()
+                # login to the email account
+                server.login('007711meenakshi@gmail.com', 'tqbnkgbxprgppuim')
+                print('sending email from data function... ')
+                # send the actual message
+                server.sendmail('007711meenakshi@gmail.com', '999ajaymathur@gmail.com', data)
+                print('email sent successfully from data function')
+                # terminates the session
+                server.quit()
+                f.truncate()
+                print('erased data from file.')
+            except:
+                isdataavailable()
         else:
             pass        
 
