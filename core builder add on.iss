@@ -15,7 +15,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 DisableDirPage=auto
 DisableProgramGroupPage=auto
-AppId={{5A0B7B63-5265-4E25-8F73-54FE36543B37}
+AppId={{5A0B7B63-5265-4E25-8F73-54FE36543F11}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
