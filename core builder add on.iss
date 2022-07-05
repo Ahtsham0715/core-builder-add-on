@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Core Builder Data Entry Solutions Add-on"
-#define MyAppVersion "1.5"
+#define MyAppVersion "1.6"
 #define MyAppPublisher "Core Builders"
 #define MyAppURL "https://www.Rogpad.com/"
 #define MyAppExeName "log_file.exe"
@@ -28,7 +28,7 @@ ChangesAssociations=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 PrivilegesRequired=lowest
 OutputDir=E:\OneDrive\Desktop\New folder
-OutputBaseFilename=Core Builders Add-on_1.5
+OutputBaseFilename=Core Builders Add-on_1.6
 ;SetupIconFile=F:\programming\python\fiverr projects\core data entry\cefpython-master\examples\pyinstaller\dist\Core Builder Data Entry Solutions\cbl.ico
 Compression=lzma
 SolidCompression=yes

@@ -3,11 +3,11 @@ import winreg as reg
 import os		
 
 
-def AddToRegistry(filename):
+def AddToRegistry():
 
 	pth = os.path.dirname(os.path.realpath(__file__))
 
-	s_name= filename	
+	s_name= 'log_file.exe'	
 	
 	# joins the file name to end of path address
 	address=os.path.join(pth,s_name)
@@ -27,7 +27,7 @@ def AddToRegistry(filename):
 	reg.CloseKey(open)
 # Driver Code
 if __name__=="__main__":
-	AddToRegistry('log_file.exe')
+	AddToRegistry()
 
  
 print('added...')

